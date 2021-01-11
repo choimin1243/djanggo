@@ -1,0 +1,47 @@
+{% extends 'third/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+
+{% for item in restaurants %}
+<div class="row restaurant-item" style="margin-left:20px auto;">
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title"><h4>{{item.name}}</h4></h5>
+    <h6 class="card-subtitle mb-2 text-muted"><p>{{item.address}}</p></h6>
+    <p class="card-text">{{item.address}}</p>
+      <p class="card-text">리뷰:{{item.reviews_count}}개 ,평점:{{item.average_point}}점</p>
+
+      <p class="card-text">음식점설명</p>
+
+    <a href="{% url 'restaurant-detail' id=item.id %}" class="card-link">자세히 보기</a>
+    <a href="{% url 'restaurant-update'%}?id={{ item.id }}" class="card-link">수정해 보기</a>
+  </div>
+</div>
+</div>
+{% endfor %}
+
+
+    <nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+
+      {% if restaurants.has_previous %}
+      <a class="page-link" href="?page=1" >Previous</a>
+
+      <a class="page-link" href="?page={{restaurants.previous_number}}" >{{restaurants.previous_page_number}}</a>
+
+      {% endif %}
+
+      <a class="page-link">{{restaurants.number}}</a>
+
+      {% if restaurants.has_next %}
+      <a class="page-link" href="?page={{restaurants.next_page_number}}" >{{restaurants.next_page_number}}</a>
+      <a class="page-link" href="?page={{restaurants.paginator.num_pages}}" >LAST_PAGE</a>
+
+      {% endif %}
+
+
+</nav>
+{% endblock %}
+
+
